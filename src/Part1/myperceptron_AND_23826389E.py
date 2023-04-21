@@ -14,7 +14,7 @@ def myperceptron_AND_23826389E():
 # Creamos las entradas y salidas de entrenamiento para una función AND
 # Inicializamos las variables E1, E2 y SE ideales para entrenamiento
 
-	VT = 10000 #número de muestras de entrada
+	VT = 100000 #número de muestras de entrada
 	E1 = np.random.randint(2, size=VT)
 	E2 = np.random.randint(2, size=VT)
 	SE = E1 & E2 # output función AND
@@ -53,7 +53,7 @@ def initialize_perceptron(n_inputs):
 	class perceptron:
 		neurons=1
 		bias = 1
-		weights = np.random.rand(n_inputs)-np.random.rand(n_inputs)
+		weights = np.random.rand(n_inputs+1)-np.random.rand(n_inputs+1)
 	myperceptron = perceptron()
 	return myperceptron
 
@@ -80,13 +80,18 @@ def train_perceptron(myperceptron, LR, input, output):
 	res=0
 	iter=0
 	for x in input:
-		res = np.cumsum((myperceptron.weights * x)+myperceptron.bias)
-		res=res[0]
+		xp=np.concatenate(([myperceptron.bias],x))
+		res = np.cumsum(myperceptron.weights * xp)
+		res=res[len(res)-1]
 		res=sigmoid(res)
 		if res!=output[iter]:
-			myperceptron.weights=myperceptron.weights+(LR*x*(output-res))
+			correct=(LR*xp*(output[iter]-res))
+			myperceptron.weights=myperceptron.weights+correct
 		iter=iter+1
-	return None
+		print(iter)
+		print(res)
+		print(output[iter])
+	return myperceptron
 def useperceptron(myperceptron, input):
 # funcion que utiliza el perceptron para calcular las salidas a partir de
 # las entradas de acuerdo con lo que haya aprendido el perceptron en la
@@ -98,9 +103,11 @@ def useperceptron(myperceptron, input):
 # out: salida
 	res=0
 	for x in input:
-		res = np.cumsum((myperceptron.weights * x)+myperceptron.bias)
-		res=res[0]
+		xp=np.concatenate(([myperceptron.bias],x))
+		res = np.cumsum(myperceptron.weights * xp)
+		res=res[len(res)-1]
 		res=sigmoid(res)
+		#print(res)
 	return res
 
 myperceptron_AND_23826389E()
