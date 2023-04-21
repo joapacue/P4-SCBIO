@@ -21,8 +21,8 @@ def myperceptron_AND_23826389E():
 	input = np.column_stack((E1, E2))
 # Creamos las entradas y salidas de validación E1V, E2V, SEV para test
 	vtest = 20 #número de muestras de entrada
-	E1V = np.random.randint(2, size=VT)
-	E2V = np.random.randint(2, size=VT)
+	E1V = np.random.randint(2, size=vtest)
+	E2V = np.random.randint(2, size=vtest)
 	SEV = E1V & E2V
 	input_test = np.column_stack((E1V, E2V))
 
@@ -38,8 +38,10 @@ def myperceptron_AND_23826389E():
 	error = np.mean(abs(SEV-S_est))
 
 	# Visualización del Resultado
-	### INCLUYE TU CÓDIGO para visualizar los datos de Test correctos y la solución
-	# dada por el perceptrón
+	ejex=np.arange(0,20,1)
+	plt.scatter(ejex,SEV)
+	plt.scatter(ejex,S_est,marker="x")
+	plt.show()
 	return None
 
 def initialize_perceptron(n_inputs):
@@ -87,10 +89,10 @@ def train_perceptron(myperceptron, LR, input, output):
 		if res!=output[iter]:
 			correct=(LR*xp*(output[iter]-res))
 			myperceptron.weights=myperceptron.weights+correct
-		iter=iter+1
 		print(iter)
 		print(res)
 		print(output[iter])
+		iter=iter+1
 	return myperceptron
 def useperceptron(myperceptron, input):
 # funcion que utiliza el perceptron para calcular las salidas a partir de
@@ -104,10 +106,10 @@ def useperceptron(myperceptron, input):
 	res=0
 	for x in input:
 		xp=np.concatenate(([myperceptron.bias],x))
-		res = np.cumsum(myperceptron.weights * xp)
-		res=res[len(res)-1]
-		res=sigmoid(res)
-		#print(res)
-	return res
+		restemp = np.cumsum(myperceptron.weights * xp)
+		restemp=restemp[len(restemp)-1]
+		restemp=sigmoid(restemp)
+		res=np.append(res, restemp)
+	return res[1:len(res)]
 
 myperceptron_AND_23826389E()
