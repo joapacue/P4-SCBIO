@@ -61,11 +61,11 @@ def initialize_perceptron(n_inputs):
 
 def sigmoid(x):
 # Funcion de activacion sigmoide
-	if abs(x)>708:
-		if x<0:
-			x=-708
-		else:
-			x=708
+	#if abs(x)>708:
+	#	if x<0:
+	#		x=-708
+	#	else:
+	#		x=708
 	out= 1/(1+math.exp(-x))
 	return out
 
@@ -102,14 +102,20 @@ def train_perceptron(myperceptron, LR, input, output):
 		Y3=res
 		
 		if res!=output[iter]:
-			errorc2=Y3*(1-Y3)*(output[iter]-Y3)
-			correctc2=(LR*np.array([1, Y1, Y2])*errorc2)
-			myperceptron.weightsc2=myperceptron.weightsc2+correctc2
+			errorc3=Y3*(1-Y3)*(output[iter]-Y3)
+			correctc3=(LR*np.array([1, Y1, Y2])*errorc3)
+			myperceptron.weightsc2=myperceptron.weightsc2+correctc3
 
-			errorc1=Y1*(1-Y1)*errorc2*myperceptron.weightsc2[0][1]
+			errorc1=Y1*(1-Y1)*errorc3*myperceptron.weightsc2[0][1]
 			correctc1=(LR*np.concatenate(([myperceptron.bias],x))*errorc1)
-			myperceptron.weightsc1=myperceptron.weightsc1+correctc1
+			myperceptron.weightsc1[0]=myperceptron.weightsc1[0]+correctc1
 
+			errorc2=Y2*(1-Y2)*errorc3*myperceptron.weightsc2[0][2]
+			correctc2=(LR*np.concatenate(([myperceptron.bias],x))*errorc2)
+			myperceptron.weightsc1[1]=myperceptron.weightsc1[0]+correctc2
+
+		
+		
 		print(iter)
 		print(res)
 		print(output[iter])
@@ -133,7 +139,7 @@ def useperceptron(myperceptron, input):
 		restemp[0]=sigmoid(restemp[0])
 		restemp[1]=sigmoid(restemp[1])
 
-		restemp=np.cumsum(myperceptron.weightsc2 * np.concatenate([myperceptron.bias],restemp))
+		restemp=np.cumsum(myperceptron.weightsc2 * np.concatenate(([myperceptron.bias],restemp)))
 		restemp=restemp[len(restemp)-1]
 		restemp=sigmoid(restemp)
 		
