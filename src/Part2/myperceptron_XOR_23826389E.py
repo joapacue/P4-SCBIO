@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def myperceptron_AND_23826389E():
+def myperceptron_XOR_23826389E():
 # Función principal que realiza las funciones de:
 # 1) Creación de las variables para el banco de entrenamiento y banco de validación
 # 2) Creación de la red neuronal (perceptrón)
