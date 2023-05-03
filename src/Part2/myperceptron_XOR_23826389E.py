@@ -147,4 +147,4 @@ def useperceptron(myperceptron, input):
 		res=np.append(res, restemp)
 	return res[1:len(res)]
 
-myperceptron_AND_23826389E()
+myperceptron_XOR_23826389E()

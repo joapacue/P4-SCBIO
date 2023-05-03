@@ -1,5 +1,6 @@
 from sklearn.neural_network import MLPClassifier
 import numpy as np
+import matplotlib.pyplot as plt
 
 def sklearn_NN_XOR():
 
@@ -17,8 +18,7 @@ def sklearn_NN_XOR():
 
 
   # Definimos el perceptrón MLPClassifier
-#	clf = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(5, 2), random_state=1)
-	clf = MLPClassifier(learning_rate_init=0.7,activation='logistic',hidden_layer_sizes=(5, 2), random_state=1)
+	clf = MLPClassifier(solver='lbfgs', alpha=1e-5,learning_rate_init=0.7,activation='logistic',hidden_layer_sizes=(5, 2), random_state=1)
 	clf.fit(input, SE)
 	sol=clf.predict(input_test)
 
@@ -27,4 +27,9 @@ def sklearn_NN_XOR():
 	print("=======Predicción=====")
 	print(sol)
 
+	ejex=np.arange(0,20,1)
+	plt.scatter(ejex,SEV)
+	plt.scatter(ejex,sol,marker="x")
+	plt.show()
+	
 sklearn_NN_XOR()
